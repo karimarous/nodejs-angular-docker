@@ -1,0 +1,105 @@
+services:
+  frontend:
+    container_name: frontend
+    image: karimarous/formation-frontend:1.0.0
+    ports:
+      - "4200:4200"
+    restart: always
+    environment:
+      - API_TARGET=http://backend:3000
+    deploy:
+      resources:
+        limits:
+          cpus: '0.1'
+          memory: 200M
+        reservations:
+          cpus: '0.05'
+          memory: 100M
+  # nginx:
+  #   container_name: nginxproxy
+  #   image: nginx:stable-alpine
+  #   expose:
+  #     - "80"
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   volumes:
+  #     - ./volumes/nginx/nginx.middle.conf:/etc/nginx/conf.d/default.conf
+  #     - ./volumes/nginx/logs:/var/log/nginx
+  #     - ./volumes/certbot/www:/var/www/certbot
+  #     - ./volumes/certbot/conf:/etc/letsencrypt
+      # deploy:
+      # resources:
+      #   limits:
+      #     cpus: '0.2'
+      #     memory: 300M
+      #   reservations:
+      #     cpus: '0.1'
+      #     memory: 100M
+  #   restart: always
+
+  backend:
+    container_name: backend
+    image: karimarous/formation-backend:1.0.0   
+    ports:
+      - "3000:3000"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.2'
+          memory: 200M
+        reservations:
+          cpus: '0.1'
+          memory: 100M
+    environment:
+    - DB_NAME=docker
+    - DB_USER=docker
+    - DB_PASSWORD=docker
+    - DB_HOST=db
+    depends_on:
+      - db
+    restart: always
+  db:
+    container_name: postgres
+    image: postgres:14
+    volumes:
+      - ./volumes/db/config:/docker-entrypoint-initdb.d/
+      - ./volumes/db/data:/var/lib/postgres/data
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
+      - APP_DB_USER=docker
+      - APP_DB_PASS=docker
+      - APP_DB_NAME=docker
+    deploy:
+      resources:
+        limits:
+          cpus: '0.2'
+          memory: 300M
+        reservations:
+          cpus: '0.1'
+          memory: 100M
+    restart: always
+
+  # certbot:
+  #   image: certbot/certbot
+  #   container_name: certbot
+  #   volumes:
+  #     - ./certbot/www:/var/www/certbot
+  #     - ./certbot/conf:/etc/letsencrypt
+  #     - ./certbot/log:/var/log/letsencrypt:rw
+  #   environment:
+  #     - DOMAIN=opsforall.net
+  #     - EMAIL=karimmaroous@gmail.com
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         cpus: '0.2'
+  #         memory: 300M
+  #       reservations:
+  #         cpus: '0.1'
+  #         memory: 100M
+  #   restart: unless-stopped
