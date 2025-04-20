@@ -53,7 +53,7 @@ services:
       - "4200:4200"
     restart: always
     environment:
-      - API_TARGET=http://b1.opsforall-formation.online:3000 
+      - API_TARGET=http://localhost:3000 
 
     deploy:
       resources:
@@ -65,41 +65,3 @@ services:
           memory: 100M
     depends_on:
     - backend
-
-  # nginx:
-  #   container_name: nginxproxy
-  #   image: nginx:stable-alpine
-  #   ports:
-  #     - "80:80"
-  #     - "443:443"
-  #   volumes:
-  #     - ./volumes/nginx/config/nginx.conf:/etc/nginx/conf.d/default.conf:ro
-  #     - ./volumes/certbot/www:/var/www/certbot/:ro
-  #     - ./volumes/certbot/conf/:/etc/letsencrypt
-  #     - ./volumes/nginx/log:/var/log/nginx/:rw
-  #   deploy:
-  #     resources:
-  #       limits:
-  #         cpus: '0.2'
-  #         memory: 300M
-  #       reservations:
-  #         cpus: '0.1'
-  #         memory: 100M
-  #   restart: always
-
-
-  # certbot:
-  #   container_name: certbot
-  #   image: certbot/certbot:latest
-  #   volumes:
-  #     - ./volumes/certbot/www/:/var/www/certbot/:rw
-  #     - ./volumes/certbot/conf/:/etc/letsencrypt/:rw   
-  #     - ./volumes/certbot/log/:/var/log/letsencrypt/:rw 
-  #   deploy:
-  #     resources:
-  #       limits:
-  #         cpus: '0.2'
-  #         memory: 300M
-  #       reservations:
-  #         cpus: '0.1'
-  #         memory: 100M
