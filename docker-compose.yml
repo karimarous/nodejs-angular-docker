@@ -107,7 +107,7 @@ services:
       - ./volumes/certbot/conf:/etc/letsencrypt
       - ./volumes/certbot/log:/var/log/letsencrypt
     entrypoint: >
-      certbot certonly --webroot --webroot-path=/var/www/certbot --email karimmaroous@gmail.com --agree-tos --no-eff-email -d ffff.opsforall-formation.online -d bbbb.opsforall-formation.online
+      certbot certonly --webroot --webroot-path=/var/www/certbot --email karimmaroous@gmail.com --agree-tos --no-eff-email --non-interactive --force-renewal -d ffff.opsforall-formation.online -d bbbb.opsforall-formation.online
     deploy:
       resources:
         limits:
