@@ -53,7 +53,7 @@ services:
       - "4200:4200"
     restart: always
     environment:
-      - API_TARGET=http://b1.opsforall-formation.online 
+      - API_TARGET=http://b1.opsforall-formation.online:3000 
 
     deploy:
       resources:
