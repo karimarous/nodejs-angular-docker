@@ -107,13 +107,7 @@ services:
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/log:/var/log/letsencrypt
     entrypoint: >
-      sh -c "certbot certonly --webroot 
-             --webroot-path=/var/www/certbot 
-             --email karimmaroous@gmail.com 
-             --agree-tos 
-             --no-eff-email 
-             -d frontend.opsforall-formation.online 
-             -d backend.opsforall-formation.online"
+      sh -c "certbot certonly --webroot --webroot-path=/var/www/certbot --email karimmaroous@gmail.com --agree-tos --no-eff-email -d frontend.opsforall-formation.online -d backend.opsforall-formation.online"
     deploy:
       resources:
         limits:
