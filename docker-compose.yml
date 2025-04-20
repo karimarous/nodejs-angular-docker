@@ -88,16 +88,16 @@ services:
           memory: 100M
     restart: always
 
-  # certbot:
-  #   image: certbot/certbot
-  #   container_name: certbot
-  #   volumes:
-  #     - ./volumes/certbot/www:/var/www/certbot
-  #     - ./volumes/certbot/conf:/etc/letsencrypt
-  #     - ./volumes/certbot/log:/var/log/letsencrypt:rw
-  #   environment:
-  #     - DOMAIN=t.opsforall-formation.online
-  #     - EMAIL=karimmaroous@gmail.com
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - ./volumes/certbot/www:/var/www/certbot
+      - ./volumes/certbot/conf:/etc/letsencrypt
+      - ./volumes/certbot/log:/var/log/letsencrypt:rw
+    environment:
+      - DOMAIN=t.opsforall-formation.online
+      - EMAIL=karimmaroous@gmail.com
 
   certbot:
     image: certbot/certbot
@@ -116,4 +116,4 @@ services:
         reservations:
           cpus: '0.1'
           memory: 100M
-    restart: unless-stopped
+    restart: none
