@@ -68,16 +68,14 @@ services:
   nginx:
     container_name: nginxproxy
     image: nginx:stable-alpine
-    expose:
-      - "80"
     ports:
       - "80:80"
       - "443:443"
     volumes:
-      - ./volumes/nginx/config/nginx.conf:/etc/nginx/conf.d/default.conf
-      - ./volumes/nginx/logs:/var/log/nginx
-      - ./volumes/certbot/www:/var/www/certbot
-      - ./volumes/certbot/conf:/etc/letsencrypt
+      - ./volumes/nginx/conf/:/etc/nginx/conf.d/:ro
+      - ./volumes/certbot/www:/var/www/certbot/:ro
+      - ./volumes/certbot/conf/:/etc/nginx/ssl/:ro
+      - ./volumes/nginx/log:/var/log/nginx/:ro
     deploy:
       resources:
         limits:
@@ -88,32 +86,19 @@ services:
           memory: 100M
     restart: always
 
-  # certbot:
-  #   image: certbot/certbot
-  #   container_name: certbot
-  #   volumes:
-  #     - ./volumes/certbot/www:/var/www/certbot
-  #     - ./volumes/certbot/conf:/etc/letsencrypt
-  #     - ./volumes/certbot/log:/var/log/letsencrypt:rw
-  #   environment:
-  #     - DOMAIN=t.opsforall-formation.online
-  #     - EMAIL=karimmaroous@gmail.com
 
-  certbot:
-    image: certbot/certbot
-    container_name: certbot
-    volumes:
-      - ./volumes/certbot/www:/var/www/certbot:rw
-      - ./volumes/certbot/conf:/etc/letsencrypt
-      - ./volumes/certbot/log:/var/log/letsencrypt
-    entrypoint: >
-      certbot certonly --webroot --webroot-path=/var/www/certbot --email karimmaroous@gmail.com --agree-tos --no-eff-email --non-interactive --force-renewal -d ffffff.opsforall-formation.online -d bbbbbb.opsforall-formation.online
-    deploy:
-      resources:
-        limits:
-          cpus: '0.2'
-          memory: 300M
-        reservations:
-          cpus: '0.1'
-          memory: 100M
+  # certbot:
+  #   container_name: certbot
+  #   image: certbot/certbot:latest
+  #   volumes:
+  #     - ./certbot/www/:/var/www/certbot/:rw
+  #     - ./certbot/conf/:/etc/letsencrypt/:rw    
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         cpus: '0.2'
+  #         memory: 300M
+  #       reservations:
+  #         cpus: '0.1'
+  #         memory: 100M
     # restart: unless-stopped
