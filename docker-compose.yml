@@ -103,9 +103,9 @@ services:
     image: certbot/certbot
     container_name: certbot
     volumes:
-      - ./certbot/www:/var/www/certbot
-      - ./certbot/conf:/etc/letsencrypt
-      - ./certbot/log:/var/log/letsencrypt
+      - ./volumes/certbot/www:/var/www/certbot
+      - ./volumes/certbot/conf:/etc/letsencrypt
+      - ./volumes/certbot/log:/var/log/letsencrypt
     entrypoint: >
       sh -c "certbot certonly --webroot --webroot-path=/var/www/certbot --email karimmaroous@gmail.com --agree-tos --no-eff-email -d frontend.opsforall-formation.online -d backend.opsforall-formation.online"
     deploy:
