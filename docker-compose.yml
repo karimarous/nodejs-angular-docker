@@ -87,18 +87,17 @@ services:
     restart: always
 
 
-  # certbot:
-  #   container_name: certbot
-  #   image: certbot/certbot:latest
-  #   volumes:
-  #     - ./certbot/www/:/var/www/certbot/:rw
-  #     - ./certbot/conf/:/etc/letsencrypt/:rw    
-  #   deploy:
-  #     resources:
-  #       limits:
-  #         cpus: '0.2'
-  #         memory: 300M
-  #       reservations:
-  #         cpus: '0.1'
-  #         memory: 100M
-    # restart: unless-stopped
+  certbot:
+    container_name: certbot
+    image: certbot/certbot:latest
+    volumes:
+      - ./certbot/www/:/var/www/certbot/:rw
+      - ./certbot/conf/:/etc/letsencrypt/:rw    
+    deploy:
+      resources:
+        limits:
+          cpus: '0.2'
+          memory: 300M
+        reservations:
+          cpus: '0.1'
+          memory: 100M
