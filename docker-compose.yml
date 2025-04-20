@@ -53,7 +53,7 @@ services:
       - "4200:4200"
     restart: always
     environment:
-      - API_TARGET=https://t.opsforall-formation.online
+      - API_TARGET=https://b.opsforall-formation.online
     deploy:
       resources:
         limits:
@@ -107,7 +107,7 @@ services:
       - ./volumes/certbot/conf:/etc/letsencrypt
       - ./volumes/certbot/log:/var/log/letsencrypt
     entrypoint: >
-      certbot certonly --webroot --webroot-path=/var/www/certbot --email karimmaroous@gmail.com --agree-tos --no-eff-email -d frontend.opsforall-formation.online -d backend.opsforall-formation.online
+      certbot certonly --webroot --webroot-path=/var/www/certbot --email karimmaroous@gmail.com --agree-tos --no-eff-email -d f.opsforall-formation.online -d b.opsforall-formation.online
     deploy:
       resources:
         limits:
