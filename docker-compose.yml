@@ -45,7 +45,7 @@ services:
           cpus: '0.1'
           memory: 100M
     restart: always
-    
+
   frontend:
     container_name: frontend
     image: karimarous/formation-frontend:1.0.0
@@ -53,7 +53,7 @@ services:
       - "4200:4200"
     restart: always
     environment:
-      - API_TARGET=http://backend:3000
+      - API_TARGET=https://backend.opsforall-formation.online/
     deploy:
       resources:
         limits:
@@ -62,8 +62,8 @@ services:
         reservations:
           cpus: '0.05'
           memory: 100M
-      depends_on:
-      - backend
+      # depends_on:
+      # - backend
 
   nginx:
     container_name: nginxproxy
